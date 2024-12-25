@@ -45,5 +45,5 @@
         - [x] Écrire des tests pour vérifier ces fonctionnalités.
 
     11. **Optimisation et Refactorisation**
-        - [ ] Optimiser le code existant.
-        - [ ] Refactoriser si nécessaire pour améliorer la lisibilité et la maintenabilité.
+        - [x] Optimiser le code existant.
+        - [x] Refactoriser si nécessaire pour améliorer la lisibilité et la maintenabilité.

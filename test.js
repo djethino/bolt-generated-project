@@ -1,5 +1,4 @@
-
-    function test(name, callback) {
+function test(name, callback) {
       try {
         callback();
         console.log(`✅ ${name}`);
@@ -119,8 +118,8 @@
       drawPiece(gridElement, piece);
 
       // Vérifier que les cellules correspondant à la pièce sont colorées après le déplacement
-      for (y = 0; y < piece.shape.length; y++) {
-        for (x = 0; x < piece.shape[y].length; x++) {
+      for (let y = 0; y < piece.shape.length; y++) {
+        for (let x = 0; x < piece.shape[y].length; x++) {
           if (piece.shape[y][x] !== 0) {
             const cellIndex = ((y + piece.y) * 10 + x + piece.x);
             expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
@@ -368,4 +367,124 @@
       // Vérifier que le niveau est mis à jour correctement
       expect(levelElement.textContent).toBe('3');
     });
-  </boltArtifact>
+
+    test('Animation de déplacement vers la gauche', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const piece = new Piece(pieces[0]);
+      drawPiece(gridElement, piece);
+
+      // Déplacer la pièce à gauche
+      piece.x -= 1;
+      game.clearCurrentPiece();
+      drawPiece(gridElement, piece);
+
+      // Vérifier que les cellules correspondant à la pièce sont colorées après le déplacement avec animation
+      for (let y = 0; y < piece.shape.length; y++) {
+        for (let x = 0; x < piece.shape[y].length; x++) {
+          if (piece.shape[y][x] !== 0) {
+            const cellIndex = ((y + piece.y) * 10 + x + piece.x);
+            expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
+          }
+        }
+      }
+    });
+
+    test('Animation de déplacement vers la droite', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const piece = new Piece(pieces[0]);
+      drawPiece(gridElement, piece);
+
+      // Déplacer la pièce à droite
+      piece.x += 1;
+      game.clearCurrentPiece();
+      drawPiece(gridElement, piece);
+
+      // Vérifier que les cellules correspondant à la pièce sont colorées après le déplacement avec animation
+      for (let y = 0; y < piece.shape.length; y++) {
+        for (let x = 0; x < piece.shape[y].length; x++) {
+          if (piece.shape[y][x] !== 0) {
+            const cellIndex = ((y + piece.y) * 10 + x + piece.x);
+            expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
+          }
+        }
+      }
+    });
+
+    test('Animation de déplacement vers le bas', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const piece = new Piece(pieces[0]);
+      drawPiece(gridElement, piece);
+
+      // Déplacer la pièce vers le bas
+      piece.y += 1;
+      game.clearCurrentPiece();
+      drawPiece(gridElement, piece);
+
+      // Vérifier que les cellules correspondant à la pièce sont colorées après le déplacement avec animation
+      for (let y = 0; y < piece.shape.length; y++) {
+        for (let x = 0; x < piece.shape[y].length; x++) {
+          if (piece.shape[y][x] !== 0) {
+            const cellIndex = ((y + piece.y) * 10 + x + piece.x);
+            expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
+          }
+        }
+      }
+    });
+
+    test('Animation de rotation', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const piece = new Piece(pieces[0]);
+      drawPiece(gridElement, piece);
+
+      // Rotation de la pièce
+      game.clearCurrentPiece();
+      piece.rotate();
+      drawPiece(gridElement, piece);
+
+      // Vérifier que les cellules correspondant à la pièce sont colorées après la rotation avec animation
+      for (let y = 0; y < piece.shape.length; y++) {
+        for (let x = 0; x < piece.shape[y].length; x++) {
+          if (piece.shape[y][x] !== 0) {
+            const cellIndex = ((y + piece.y) * 10 + x + piece.x);
+            expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
+          }
+        }
+      }
+    });
+
+    test('Pause du jeu', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const scoreElement = document.createElement('span');
+      const levelElement = document.createElement('span');
+
+      const game = new Game(gridElement, scoreElement, levelElement);
+
+      // Mettre le jeu en pause
+      game.togglePause();
+
+      // Vérifier que le jeu est en pause
+      expect(game.isPaused).toBe(true);
+    });
+
+    test('Redémarrage du jeu', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const scoreElement = document.createElement('span');
+      const levelElement = document.createElement('span');
+
+      const game = new Game(gridElement, scoreElement, levelElement);
+
+      // Mettre le jeu en pause
+      game.togglePause();
+
+      // Redémarrer le jeu
+      game.togglePause();
+
+      // Vérifier que le jeu n'est plus en pause
+      expect(game.isPaused).toBe(false);
+    });
