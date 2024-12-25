@@ -5,6 +5,7 @@ body {
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      flex-direction: column;
     }
 
     #game-container {
@@ -12,4 +13,22 @@ body {
       height: 600px;
       border: 2px solid black;
       position: relative;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(10, 30px);
+      grid-template-rows: repeat(20, 30px);
+    }
+
+    #game-container div {
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    #score-board {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #pause-button {
+      padding: 10px 20px;
+      font-size: 16px;
     }

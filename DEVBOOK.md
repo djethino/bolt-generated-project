@@ -29,16 +29,16 @@
        - [x] Implémenter la logique de collision.
 
     7. **Suppression des Lignes Complétées**
-       - [ ] Écrire un test pour vérifier que les lignes complétées sont supprimées.
-       - [ ] Implémenter la logique de suppression des lignes.
+       - [x] Écrire un test pour vérifier que les lignes complétées sont supprimées.
+       - [x] Implémenter la logique de suppression des lignes.
 
     8. **Gestion du Score et des Niveaux**
-       - [ ] Écrire un test pour vérifier le calcul du score.
-       - [ ] Implémenter la logique de gestion du score et des niveaux.
+       - [x] Écrire un test pour vérifier le calcul du score.
+       - [x] Implémenter la logique de gestion du score et des niveaux.
 
     9. **Ajout d'Animations**
-       - [ ] Ajouter des animations pour les déplacements et rotations des pièces.
-       - [ ] Écrire des tests pour vérifier que les animations fonctionnent correctement.
+       - [x] Ajouter des animations pour les déplacements et rotations des pièces.
+       - [x] Écrire des tests pour vérifier que les animations fonctionnent correctement.
 
     10. **Gestion du Jeu (Pause, Redémarrage)**
         - [ ] Implémenter la logique de pause et de redémarrage du jeu.

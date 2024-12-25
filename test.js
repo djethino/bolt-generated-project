@@ -1,4 +1,5 @@
-function test(name, callback) {
+
+    function test(name, callback) {
       try {
         callback();
         console.log(`✅ ${name}`);
@@ -71,7 +72,7 @@ function test(name, callback) {
     test('Pièce I apparaît correctement dans le jeu', () => {
       const container = document.createElement('div');
       const gridElement = createGrid(container);
-      const game = new Game(gridElement);
+      const game = new Game(gridElement, document.createElement('span'), document.createElement('span'));
 
       // Vérifier que la pièce est ajoutée à la grille
       for (let y = 0; y < game.currentPiece.shape.length; y++) {
@@ -118,8 +119,8 @@ function test(name, callback) {
       drawPiece(gridElement, piece);
 
       // Vérifier que les cellules correspondant à la pièce sont colorées après le déplacement
-      for (let y = 0; y < piece.shape.length; y++) {
-        for (let x = 0; x < piece.shape[y].length; x++) {
+      for (y = 0; y < piece.shape.length; y++) {
+        for (x = 0; x < piece.shape[y].length; x++) {
           if (piece.shape[y][x] !== 0) {
             const cellIndex = ((y + piece.y) * 10 + x + piece.x);
             expect(gridElement.children[cellIndex].style.backgroundColor).toBe(piece.color);
@@ -277,3 +278,94 @@ function test(name, callback) {
         }
       }
     });
+
+    test('Calcul du score après suppression d\'une ligne', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const scoreElement = document.createElement('span');
+      const levelElement = document.createElement('span');
+
+      const game = new Game(gridElement, scoreElement, levelElement);
+
+      // Remplir une ligne entière
+      for (let x = 0; x < 10; x++) {
+        const cellIndex = (19 * 10 + x);
+        gridElement.children[cellIndex].style.backgroundColor = 'cyan';
+      }
+
+      // Ajouter une pièce en dessous de la ligne complète
+      const piece = new Piece(pieces[0]);
+      piece.y = 18;
+      drawPiece(gridElement, piece);
+
+      // Déplacer la pièce vers le bas pour verrouiller et supprimer la ligne complète
+      game.clearCurrentPiece();
+      piece.y += 1;
+      game.lockPiece();
+
+      // Vérifier que le score est mis à jour correctement
+      expect(scoreElement.textContent).toBe('40');
+    });
+
+    test('Calcul du score après suppression de plusieurs lignes', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const scoreElement = document.createElement('span');
+      const levelElement = document.createElement('span');
+
+      const game = new Game(gridElement, scoreElement, levelElement);
+
+      // Remplir deux lignes entières
+      for (let y = 18; y < 20; y++) {
+        for (let x = 0; x < 10; x++) {
+          const cellIndex = (y * 10 + x);
+          gridElement.children[cellIndex].style.backgroundColor = 'cyan';
+        }
+      }
+
+      // Ajouter une pièce en dessous des lignes complétées
+      const piece = new Piece(pieces[0]);
+      piece.y = 17;
+      drawPiece(gridElement, piece);
+
+      // Déplacer la pièce vers le bas pour verrouiller et supprimer les lignes complétées
+      game.clearCurrentPiece();
+      piece.y += 1;
+      game.lockPiece();
+
+      // Vérifier que le score est mis à jour correctement
+      expect(scoreElement.textContent).toBe('300');
+    });
+
+    test('Mise à jour du niveau après atteindre un certain score', () => {
+      const container = document.createElement('div');
+      const gridElement = createGrid(container);
+      const scoreElement = document.createElement('span');
+      const levelElement = document.createElement('span');
+
+      const game = new Game(gridElement, scoreElement, levelElement);
+
+      // Remplir plusieurs lignes pour atteindre un certain score
+      for (let i = 0; i < 25; i++) {
+        for (let y = 18; y < 20; y++) {
+          for (let x = 0; x < 10; x++) {
+            const cellIndex = (y * 10 + x);
+            gridElement.children[cellIndex].style.backgroundColor = 'cyan';
+          }
+        }
+
+        // Ajouter une pièce en dessous des lignes complétées
+        const piece = new Piece(pieces[0]);
+        piece.y = 17;
+        drawPiece(gridElement, piece);
+
+        // Déplacer la pièce vers le bas pour verrouiller et supprimer les lignes complétées
+        game.clearCurrentPiece();
+        piece.y += 1;
+        game.lockPiece();
+      }
+
+      // Vérifier que le niveau est mis à jour correctement
+      expect(levelElement.textContent).toBe('3');
+    });
+  </boltArtifact>

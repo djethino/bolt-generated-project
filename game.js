@@ -1,14 +1,31 @@
 import { pieces } from './pieces.js';
 
     export class Game {
-      constructor(gridElement) {
+      constructor(gridElement, scoreElement, levelElement) {
         this.grid = gridElement;
+        this.scoreElement = scoreElement;
+        this.levelElement = levelElement;
         this.currentPiece = null;
+        this.score = 0;
+        this.level = 1;
+        this.isPaused = false;
         this.init();
       }
 
       init() {
         this.spawnPiece();
+        this.updateScoreBoard();
+        this.startGameLoop();
+      }
+
+      startGameLoop() {
+        const gameLoop = () => {
+          if (!this.isPaused) {
+            this.moveDown();
+          }
+          setTimeout(gameLoop, 1000 / (this.level * 2));
+        };
+        gameLoop();
       }
 
       spawnPiece() {
@@ -156,10 +173,15 @@ import { pieces } from './pieces.js';
         }
 
         // Clear completed lines
-        this.clearCompletedLines();
+        const linesCleared = this.clearCompletedLines();
+
+        // Update score and level
+        this.updateScore(linesCleared);
       }
 
       clearCompletedLines() {
+        let linesCleared = 0;
+
         for (let y = 19; y >= 0; y--) {
           let isComplete = true;
 
@@ -189,8 +211,33 @@ import { pieces } from './pieces.js';
 
             // Increment y to check the same line again
             y++;
+            linesCleared++;
           }
         }
+
+        return linesCleared;
+      }
+
+      updateScore(linesCleared) {
+        if (linesCleared > 0) {
+          const points = [40, 100, 300, 1200]; // Points for clearing 1, 2, 3, or 4 lines
+          this.score += points[Math.min(linesCleared - 1, 3)] * this.level;
+          this.updateScoreBoard();
+        }
+      }
+
+      updateLevel() {
+        this.level = Math.floor(this.score / 1000) + 1; // Increase level every 1000 points
+        this.updateScoreBoard();
+      }
+
+      updateScoreBoard() {
+        this.scoreElement.textContent = this.score;
+        this.levelElement.textContent = this.level;
+      }
+
+      togglePause() {
+        this.isPaused = !this.isPaused;
       }
     }
 
