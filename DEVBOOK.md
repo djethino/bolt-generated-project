@@ -41,8 +41,8 @@
        - [x] Écrire des tests pour vérifier que les animations fonctionnent correctement.
 
     10. **Gestion du Jeu (Pause, Redémarrage)**
-        - [ ] Implémenter la logique de pause et de redémarrage du jeu.
-        - [ ] Écrire des tests pour vérifier ces fonctionnalités.
+        - [x] Implémenter la logique de pause et de redémarrage du jeu.
+        - [x] Écrire des tests pour vérifier ces fonctionnalités.
 
     11. **Optimisation et Refactorisation**
         - [ ] Optimiser le code existant.
